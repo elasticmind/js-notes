@@ -12,19 +12,25 @@ Closures are created at function creation time. When a function is defined insid
 ## Example
 Consider:
 ```js
-function outer() {
-	var outerVar = 'outerVarContent';
+function outer(argument1, argument2) {
+	var outerVar1 = 'outerVarContent1';
+	var outerVar2 = 'outerVarContent2';
 
 	function inner() {
-		var innerVar = 'innerVarContent';
-		console.log(outerVar);
+		var innerVar1 = 'innerVarContent1';
+		var innerVar2 = 'innerVarContent2';
+		console.log(argument1);
+		console.log(innerVar1);
+		console.log(outerVar1);
 	}
 
 	return inner;
 }
 
-var returned = outer();
-console.log(returned()); // outerVarContent
+var returned = outer('argument1Value', 'argument2Value');
+returned(); // argument1Value
+            // innerVarContent1
+            // outerVarContent1
 ```
 Exploring `returned`, the console shows how `outerVar` is remembered:
 ```js
@@ -38,7 +44,8 @@ Exploring `returned`, the console shows how `outerVar` is remembered:
   [[FunctionLocation]]: VM186:4
   [[Scopes]]: Scopes[2]
     0: Closure (outer)
-      outerVar: "outerVarContent"
+      argument1: "argument1Value"
+      outerVar1: "outerVarContent1"
     1: Global {...}
 ```
 Closed over variables cannot be reassigned.
